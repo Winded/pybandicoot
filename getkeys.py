@@ -13,4 +13,9 @@ def key_check():
         if wapi.GetAsyncKeyState(ord(key)):
             keys.append(key)
     return keys
- 
+
+if __name__ == "__main__":
+    while True:
+        keys = key_check()
+        if " " in keys:
+            print("SPACE!")

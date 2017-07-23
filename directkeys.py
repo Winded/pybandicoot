@@ -8,6 +8,15 @@ import time
 
 SendInput = ctypes.windll.user32.SendInput
 
+# Charater -> DirectKey mappings
+KEY_DIRECT_MAPPINGS = {
+    'W': 0x11,
+    'A': 0x1E,
+    'S': 0x1F,
+    'D': 0x20,
+    'F': 0x21,
+    '\x20': 0x39,
+}
 
 W = 0x11
 A = 0x1E
@@ -65,6 +74,17 @@ def ReleaseKey(hexKeyCode):
     ii_.ki = KeyBdInput( 0, hexKeyCode, 0x0008 | 0x0002, 0, ctypes.pointer(extra) )
     x = Input( ctypes.c_ulong(1), ii_ )
     ctypes.windll.user32.SendInput(1, ctypes.pointer(x), ctypes.sizeof(x))
+
+def PressKeys(hexKeys):
+    for k in hexKeys:
+        PressKey(k)
+
+def ReleaseAll():
+    for key, code in KEY_DIRECT_MAPPINGS.items():
+        ReleaseKey(code)
+
+def keys_to_direct(keys):
+    return list(map(lambda k: KEY_DIRECT_MAPPINGS.get(k, 0), keys))
 
 if __name__ == '__main__':
     PressKey(0x11)

@@ -1,21 +1,31 @@
-# Using Python programming to Play Grand Theft Auto 5
+# Python CNN that plays Crash Bandicoot
 
-Explorations of Using Python to play Grand Theft Auto 5, mainly for the purposes of creating self-driving cars and other vehicles.
+This project is forked from sentdex's pygta5 self-driving AI project.
+The goal of this project is to utilize the same environment to teach an AI how to play Crash Bandicoot.
 
-We read frames directly from the desktop, rather than working with the game's code itself. This means it works with more games than just GTA V, and it will basically learn (well, attempt to learn...) whatever you put in front of it based on the frames as input and key presses as output.
+Starting from trying to complete the first level all on it's own to perhaps completing multiple levels on its own
+and navigating the main menu.
 
-Pull requests are welcomed.
+This readme is going to be a kind of a notebook "recording" all the past iterations of the AI.
 
-Currently, to use the latest version of this AI, you will need to run first "create_training_data.py," then balance this data with "balance_Data.py."
+## v0.01
+First iteration of the project was basically to see if the alexnet training model could make any sense of the game.
+And it did! Suprisingly well, in fact. 
 
-When creating training data, this works when you have the game in windowed mode, 800x600 resolution, at the top left of your screen. You need this for both training and testing. Eventually we can go off the window's name, but, for now, the current code wants the window in the corner.
+The setup was similar to v0.01 of pygta5. Some tweaks and notes:
 
-Do this for as many files/training samples as you wish. I suggest 100K+ after balancing, but the more the merrier.
+- The 1280x720 game screen was scaled down to 160x120 grayscale
+- Output was 27 different key combinations, which was overly complex, I know
+- 20 thousand frames of training data, balanced to around 6000 frames as there was a lot of no keys and a lot of forward
+- 40 epochs that took around 30 minutes got the model into a good accuracy with GPU training
+- I tried with an increased resolution of 320x240 with no significant difference
+ - It probably just caused more uncertainty, making it worse
+ - Crash Bandicoot is already at low resolution, even 1280x720 scales the actual game resolution upwards, so increasing resolution might just be pointless altogether
+- The AI was able to go about 75% of the first level quite well, being able to spin off crabs and turtles, and most of the time doing perfect jumps across pits.
 
-Next, Train the model with train_model.py.
+Some ideas for v0.02
 
-Finally, use the model in game with test_model.py. 
-
-...you'll probably want to poke into the tutorials here: https://pythonprogramming.net/game-frames-open-cv-python-plays-gta-v/. If you need tutorials on deep learning, or tensorflow, or tflearn, see here: https://pythonprogramming.net/tensorflow-introduction-machine-learning-tutorial/
-
-Do you know of some relevant papers/research/models for this project? Share with us here: https://github.com/Sentdex/pygta5/issues/11
+- Reduce output complexity. All the AI really needs is key combinations so it can run&jump and run&spin in 4 different directions, which would total about 15 combinations
+- Maintain resolution, but record color. Sometimes there is too much background complexity in the game that could make it difficult for the AI to identify where Crash is and where it should be going
+- Try out inception v3
+- More training data! Around 100 thousand frames, possibly gameplay from other levels as well which could help the AI manage in more unpredictable setups. There were some moments where the AI jumped at the wrong position when a turtle was in a different place, causing it to fall to a pit, and other times just simply walking towards a turtle and dying
