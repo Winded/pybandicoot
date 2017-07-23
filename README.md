@@ -12,6 +12,10 @@ This readme is going to be a kind of a notebook "recording" all the past iterati
 First iteration of the project was basically to see if the alexnet training model could make any sense of the game.
 And it did! Suprisingly well, in fact. 
 
+Video: [https://youtu.be/YykhH3Co1b0](https://youtu.be/YykhH3Co1b0)
+
+As you can see from the video, it cannot complete the level on it's own, but at least it has a decent sense of the environment. The command window in the video prints out paused/unpaused which indicate manual/AI control, respectively. Around the one minute mark is the steps, in which the AI loses itself.
+
 The setup was similar to v0.01 of pygta5. Some tweaks and notes:
 
 - The 1280x720 game screen was scaled down to 160x120 grayscale
